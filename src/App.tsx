@@ -27,13 +27,11 @@ function App() {
 
   const increment = () => {
     setPage(page + 1);
-    console.log("valor do page dentro do incremente", page);
   };
 
   const decrement = () => {
     if (page > 1) {
       setPage(page - 1);
-      console.log("valor do page dentro do decremente", page);
     }
   };
 
