@@ -1,12 +1,27 @@
+import { useState } from "react";
 import "./App.css";
 import { useQuery } from "react-query";
 
 function App() {
-  const { isLoading, error, data } = useQuery("posts", () =>
-    fetch("https://jsonplaceholder.typicode.com/posts/1").then((res) =>
+  const [page, setPage] = useState<number>(1);
+
+  const { isLoading, error, data } = useQuery(["post", page], () =>
+    fetch(`https://jsonplaceholder.typicode.com/posts/${page}`).then((res) =>
       res.json()
     )
   );
+
+  const increment = () => {
+    setPage(page + 1);
+    console.log("valor do page dentro do incremente", page);
+  };
+
+  const decrement = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      console.log("valor do page dentro do decremente", page);
+    }
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -20,6 +35,8 @@ function App() {
       <ul>
         <p key={data.id}>{data.title}</p>
       </ul>
+      <button onClick={decrement}>Prev</button>
+      <button onClick={increment}>Next</button>
     </>
   );
 }
